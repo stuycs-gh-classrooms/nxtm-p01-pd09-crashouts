@@ -22,17 +22,17 @@ The first phase will be to work on this document.
 
 ## Phase 0: Selection, Analysis & Plan
 
-#### Selected Project: CHOOSE WISELY
+#### Selected Project: Breakout.
 
 ### Necessary Features
 What are the core features that your program should have? These should be things that __must__ be implemented in order to make the program useable/playable, not extra features that could be added to make the program more interesting/fun.
 
-YOUR ANSWERS HERE
+There must be a ball/projectile that can be used to break the colored tiles. There must be a grid of colored tiles/blocks for the ball to hit. There must be a bar or some sort of "racket" to actually hit the ball. 
 
 ### Extra Features
 What are some features that are not essential to the program, but you would like to see (provided you have time after completing the necessary features. Theses can be customizations that are not part of the core requirements.
 
-YOUR ANSWERS HERE
+Make the game have realistic physics when the ball colides with the movement of the racket/mouse pointer. 
 
 ### Array Usage
 How will you be using arrays in this project?
