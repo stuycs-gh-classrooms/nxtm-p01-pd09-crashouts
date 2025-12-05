@@ -38,21 +38,24 @@ Make the game have realistic physics when the ball colides with the movement of 
 How will you be using arrays in this project?
 
 1D Array:
-- YOUR ANSER HERE
+- The main ball
 
 2D Array:
-- YOUR ANSWER HERE
+- The boxes with scores 
 
 
 ### Controls
 How will your program be controlled? List all keyboard commands and mouse interactions.
 
 Keyboard Commands:
-- LIST OF COMMANDS HERE
+- r to reset
+- esc to pause
+- space to resume
+- maybe arrow key control the bracket
 
 Mouse Control:
-- Mouse movement:
-- Mouse pressed:
+- Mouse movement: x only
+- Mouse pressed: left click to respawn when the ball touches non-bounceable walls
 
 
 ### Classes
