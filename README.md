@@ -61,6 +61,17 @@ Mouse Control:
 ### Classes
 What classes will you be creating for this project? Include the instance variables and methods that you believe you will need. You will be required to create at least 2 different classes. If you are going to use classes similar to those we've made for previous assignments, you will have to add new features to them.
 
+CLASS BALL
+- int x, y;
+- int xspeed, yspeed;
+- int size;
+- METHODS
+- void breakBlock();
+- void display();
+- void move();
+- void bounce();
+- void die();
+
 CLASS BLOCK
 - Instance variables:
   - int x, y;
