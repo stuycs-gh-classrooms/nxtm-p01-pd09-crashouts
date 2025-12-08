@@ -27,7 +27,7 @@ The first phase will be to work on this document.
 ### Necessary Features
 What are the core features that your program should have? These should be things that __must__ be implemented in order to make the program useable/playable, not extra features that could be added to make the program more interesting/fun.
 
-There must be a ball/projectile that can be used to break the colored tiles. There must be a grid of colored tiles/blocks for the ball to hit. There must be a bar or some sort of "racket" to actually hit the ball. 
+There must be a ball/projectile that can be used to break the colored tiles. There must be a grid of colored tiles/blocks for the ball to hit. There must be a bar or some sort of "racket" to actually hit the ball. The game will get harder as the ball will become faster as the points go up. 
 
 ### Extra Features
 What are some features that are not essential to the program, but you would like to see (provided you have time after completing the necessary features. Theses can be customizations that are not part of the core requirements.
@@ -41,7 +41,7 @@ How will you be using arrays in this project?
 - The main ball
 
 2D Array:
-- The boxes with scores 
+- The boxes with scores/blocks
 
 
 ### Controls
@@ -61,14 +61,21 @@ Mouse Control:
 ### Classes
 What classes will you be creating for this project? Include the instance variables and methods that you believe you will need. You will be required to create at least 2 different classes. If you are going to use classes similar to those we've made for previous assignments, you will have to add new features to them.
 
-CLASS NAME0
+CLASS BLOCK
 - Instance variables:
-  - LIST INSTANCE VARS HERE
+  - int x, y;
+  - int height;
+  - int width;
+  - boolean break;
 - METHODS
-  - LIST METHODS HERE
+  - void display()
+  - 
 
-CLASS NAME1
+CLASS RACKET
 - Instance variables:
-  - LIST INSTANCE VARS HERE
+  - int xcor, ycor;
+  - int racketWidth;
+  - int racketHeight;
 - METHODS
-  - LIST METHODS HERE
+  - void display()
+  - ballSpeed()
