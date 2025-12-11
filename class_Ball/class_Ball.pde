@@ -1,47 +1,33 @@
-class Balls {
-  //instance variables
-  int xcor, ycor;
-  int xspeed, yspeed;
-  int ballSize;
-  PVector middle;
-  boolean moving;
+class Ball {
+  float x, y;
+  float xspeed, yspeed;
+  float r;
 
-  void Ball(int x, int y, int s)
-  {
-    ballSize = s;
-    x = int(random(ballSize/2, width - ballSize/2));
-    y = int(random(ballSize/2, height - ballSize/2));
-    xspeed = 5;
-    yspeed = 5;
+  Ball(float x, float y, float xs, float ys, float r) {
+    this.x = x;
+    this.y = y;
+    this.xspeed = xs;
+    this.yspeed = ys;
+    this.r = r;
   }
 
-  void setup() {
-    size(600, 400);
-    ballSize = 100;
-    moving = true;
+  void move() {
+    x += xspeed;
+    y += yspeed;
+
+    if (x < r || x > width - r) xspeed *= -1;
+    if (y < r) yspeed *= -1;
   }
+
   void display() {
-    circle (xcor, ycor, ballSize);
-    fill (0);
+    fill(255);
+    ellipse(x, y, r * 2, r * 2);
   }
-}
 
-void move(int x, int y, int xspeed, int yspeed, int ballSize)
-{
-  if (y >= height - ballSize/2 ||
-    y <= ballSize/2) {
-    yspeed *= -1;
-  }//up/down bounce
-
-  if (x >= width - ballSize/2 ||
-    x <= ballSize/2) {
-    xspeed *= -1;
-  }//left/right bounce
-
-  if (x == 0 && y == 0 ) {
-    xspeed *= -1;
-    yspeed *= -1;
-    y+= yspeed;
-    x+= xspeed;
+  void reset() {
+    x = width/2;
+    y = height/2;
+    xspeed = 5;
+    yspeed = -5;
   }
 }
