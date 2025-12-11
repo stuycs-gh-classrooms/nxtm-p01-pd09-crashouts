@@ -1,40 +1,21 @@
-// Ball.pde (updated)
+class Racket {
+  float x, y, w, h;
 
-class Ball {
-  float x, y;
-  float xspeed, yspeed;
-  float r;
-
-  Ball(float x, float y, float xs, float ys, float r) {
+  Racket(float x, float y, float w, float h) {
     this.x = x;
     this.y = y;
-    this.xspeed = xs;
-    this.yspeed = ys;
-    this.r = r;
+    this.w = w;
+    this.h = h;
   }
 
-  void move() {
-    x += xspeed;
-    y += yspeed;
-
-    // wall bounce
-    if (x < r || x > width - r) {
-      xspeed *= -1;
-    }
-    if (y < r) {
-      yspeed *= -1;
-    }
+  void update() {
+    // follow mouse but stay on screen
+    x = mouseX - w/2;
+    x = constrain(x, 0, width - w);
   }
 
   void display() {
     fill(255);
-    ellipse(x, y, r * 2, r * 2);
-  }
-
-  void reset() {
-    x = width/2;
-    y = height/2;
-    xspeed = 5;
-    yspeed = -5;
+    rect(x, y, w, h);
   }
 }
