@@ -11,7 +11,6 @@ boolean gameOver = false;
 
 void setup() {
   size(600, 700); // larger canvas to fit UI
-  initLevel();
 }
 
 void draw() {
@@ -43,8 +42,6 @@ void draw() {
   // paddle collision
   if (ball.y + ball.r >= racket.y && ball.x > racket.x && ball.x < racket.x + racket.w) {
     ball.yspeed *= -1;
-    float hitPos = (ball.x - (racket.x + racket.w/2)) / (racket.w/2);
-    ball.xspeed = hitPos * 5;
   }
 
   // bottom collision = lose life
@@ -68,46 +65,25 @@ void draw() {
       b.display();
     }
   }
-
-  // level up
-  if (allBroken()) {
-    level++;
-    ball.reset();
-    initLevel();
-  }
 }
 
-void initLevel() {
-  ball = new Ball(width/2, 300, 5 + level, -5 - level, 10);
-  racket = new Racket(width/2 - 50, height - 60, 100, 15);
 
-  blocks = new Block[rows][cols];
-  float bw = width / cols;
-  float bh = 25;
 
-  color[] rowColors = {
-    color(255, 0, 0), // 50 pts
-    color(255, 165, 0), // 40 pts
-    color(255, 255, 0), // 30 pts
-    color(0, 200, 0), // 20 pts
-    color(0, 150, 255)  // 10 pts
-  };
+void initLevel(int bh, int bw) {
+  bh = 25;
+  bw = width/2;
+  color [] rowColors ={
 
-  for (int r = 0; r < rows; r++) {
+
+    for (int r = 0; r < rows; r++) {
     for (int c = 0; c < cols; c++) {
       blocks[r][c] = new Block(c * bw, r * bh + 120, bw - 2, bh - 2, rowColors[r], r);
     }
   }
 }
-
-boolean allBroken() {
-  for (int r = 0; r < rows; r++) {
-    for (int c = 0; c < cols; c++) {
-      if (!blocks[r][c].broken) return false;
-    }
-  }
-  return true;
 }
+
+
 
 void keyPressed() {
   if (key == 'p') paused = !paused;
