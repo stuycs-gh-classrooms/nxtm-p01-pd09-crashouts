@@ -21,4 +21,3 @@ class Racket {
     rect(x, y, w, h);
   }
 }
-

@@ -40,7 +40,9 @@ void draw() {
   ball.display();
 
   // paddle collision
-  if (ball.y + ball.r >= racket.y && ball.x > racket.x && ball.x < racket.x + racket.w) {
+  if (ball.y + ball.r >= racket.y 
+  && ball.x > racket.x 
+  && ball.x < racket.x + racket.w) {
     ball.yspeed *= -1;
   }
 
@@ -69,21 +71,33 @@ void draw() {
 
 
 
-void initLevel(int bh, int bw) {
-  bh = 25;
-  bw = width/2;
-  color [] rowColors ={
-
-
-    for (int r = 0; r < rows; r++) {
+void initLevel() {
+  blocks = new Block[rows][cols];
+  float bh = 25;
+  float bw = width/ cols ;
+  color [] rowColors = {
+    color (255, 255, 0),
+    color (0, 255, 0),
+    color (0, 0, 255),
+    color (255, 165, 0),
+    color (255, 0, 0)
+  };
+  for (int r = 0; r < rows; r++) {
     for (int c = 0; c < cols; c++) {
       blocks[r][c] = new Block(c * bw, r * bh + 120, bw - 2, bh - 2, rowColors[r], r);
     }
   }
 }
-}
 
 
+ boolean allBroken() {
+  for (int r = 0; r < rows; r++) {
+    for (int c = 0; c < cols; c++) {
+      if (!blocks[r][c].broken) return false;
+    }
+  }
+  return true;
+} 
 
 void keyPressed() {
   if (key == 'p') paused = !paused;
