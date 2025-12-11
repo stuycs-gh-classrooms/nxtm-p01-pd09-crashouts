@@ -1,115 +1,81 @@
 Ball ball;
-Racket racket;
-Block[][] grid;
+text("Score: " + score, 20, 20);
 
-int rows = 6;
-int cols = 10;
-int lives = 3;
-boolean paused = false;
-boolean gameOver = false;
-boolean win = false;
 
-void setup() {
-  size(600, 700);
-  resetGame();
+if (paused || gameOver) {
+fill(255);
+textSize(32);
+textAlign(CENTER);
+if (gameOver) text("GAME OVER - Press R", width/2, height/2);
+else text("PAUSED", width/2, height/2);
+return;
 }
 
-void draw() {
-  background(0);
 
-  if (paused) {
-    fill(255);
-    textAlign(CENTER);
-    textSize(32);
-    text("PAUSED", width/2, height/2);
-    return;
-  }
+racket.update();
+racket.display();
 
-  if (gameOver) {
-    fill(255, 50, 50);
-    textAlign(CENTER);
-    textSize(32);
-    text("GAME OVER - Press R to Reset", width/2, height/2);
-    return;
-  }
 
-  if (win) {
-    fill(50, 255, 100);
-    textAlign(CENTER);
-    textSize(32);
-    text("YOU WIN! Press R to Restart", width/2, height/2);
-    return;
-  }
+ball.move();
+ball.display();
 
-  // draw racket
-  racket.update();
-  racket.display();
 
-  // draw and move ball
-  ball.move();
-  ball.display();
-
-  // check collisions with blocks
-  boolean anyLeft = false;
-  for (int r = 0; r < rows; r++) {
-    for (int c = 0; c < cols; c++) {
-      if (!grid[r][c].broken) {
-        anyLeft = true;
-        if (grid[r][c].checkCollision(ball)) {
-          ball.yspeed *= -1;
-        }
-      }
-      grid[r][c].display();
-    }
-  }
-
-  // win condition
-  if (!anyLeft) win = true;
-
-  // check bottom death
-  if (ball.y > height) {
-    lives--;
-    if (lives <= 0) gameOver = true;
-    else ball.reset();
-  }
-
-  // show lives
-  fill(255);
-  textSize(18);
-  text("Lives: " + lives, 60, 20);
+if (ball.y + ball.r >= racket.y && ball.x > racket.x && ball.x < racket.x + racket.w) {
+ball.yspeed *= -1;
+float hitPos = (ball.x - (racket.x + racket.w/2)) / (racket.w/2);
+ball.xspeed = hitPos * 5;
 }
+
+
+if (ball.y > height) {
+gameOver = true;
+}
+
+
+int pts[] = {50, 40, 30, 20, 10};
+
+
+for (int r = 0; r < rows; r++) {
+for (int c = 0; c < cols; c++) {
+Block b = blocks[r][c];
+if (!b.broken && b.checkCollision(ball)) {
+b.broken = true;
+ball.yspeed *= -1;
+score += pts[b.row];
+}
+b.display();
+}
+}
+
+
+if (allBroken()) {
+paused = true;
+fill(255);
+textSize(32);
+textAlign(CENTER);
+text("YOU WIN! Press R", width/2, height/2);
+}
+}
+
+
+boolean allBroken() {
+for (int r = 0; r < rows; r++) {
+for (int c = 0; c < cols; c++) {
+if (!blocks[r][c].broken) return false;
+}
+}
+return true;
+}
+
 
 void keyPressed() {
-  if (key == 'r' || key == 'R') resetGame();
-  if (key == ' ') paused = false;
-  if (key == ESC) {
-    paused = true;
-    key = 0;
-  }
+if (key == 'p') paused = !paused;
+
+
+if (key == 'r') {
+setup();
+paused = false;
+gameOver = false;
+score = 0;
 }
-
-void mouseMoved() {
-  racket.x = mouseX - racket.w / 2;
-}
-
-void resetGame() {
-  // initialize racket and ball
-  racket = new Racket(width/2 - 50, height - 80, 100, 15);
-  ball = new Ball(width/2, height/2, 5, -5, 12);
-
-  // init grid
-  grid = new Block[rows][cols];
-  int bw = width / cols;
-  int bh = 25;
-
-  for (int r = 0; r < rows; r++) {
-    for (int c = 0; c < cols; c++) {
-      grid[r][c] = new Block(c * bw, 80 + r * bh, bw - 2, bh - 2);
-    }
-  }
-
-  lives = 3;
-  paused = false;
-  gameOver = false;
-  win = false;
 }
