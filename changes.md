@@ -1,1 +1,5 @@
-We added our classes and the methods/instances. We added a new feature where the game gets harder as the points progress.
+- We added our classes and the methods/instances. We added a new feature where the game gets harder as the points progress.
+- Started on the Class of Ball and Block
+- Finished class Ball and Block
+- Finished class Racket
+- 
