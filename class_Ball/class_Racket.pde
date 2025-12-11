@@ -12,7 +12,6 @@ class Racket {
 
   void update() {
     x = mouseX - w/2;
-    x = constrain(x, 0, width - w);
     y = height - 60; // fixed below UI and near bottom
   }
 
@@ -22,3 +21,4 @@ class Racket {
     rect(x, y, w, h);
   }
 }
+
