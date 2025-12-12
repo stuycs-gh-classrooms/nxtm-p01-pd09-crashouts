@@ -1,0 +1,7 @@
+- We added our classes and the methods/instances. We added a new feature where the game gets harder as the points progress.
+- Started on the Class of Ball and Block
+- Finished class Ball and Block
+- Finished class Racket
+- Added Levels
+- Change the spawn place of the ball to be random
+- Change the background to random rgb when you reach the next level 

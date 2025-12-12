@@ -1,6 +1,7 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/QTULg0OX)
 # NeXtCS Project 01
-### thinker0: FRIST LSAT
-### thinker1: FRIST LSAT
+### thinker0: Samaun Asaf
+### thinker1: Erick Lin
 ---
 
 ### Overview
@@ -21,50 +22,71 @@ The first phase will be to work on this document.
 
 ## Phase 0: Selection, Analysis & Plan
 
-#### Selected Project: CHOOSE WISELY
+#### Selected Project: Breakout.
 
 ### Necessary Features
 What are the core features that your program should have? These should be things that __must__ be implemented in order to make the program useable/playable, not extra features that could be added to make the program more interesting/fun.
 
-YOUR ANSWERS HERE
+There must be a ball/projectile that can be used to break the colored tiles. There must be a grid of colored tiles/blocks for the ball to hit. There must be a bar or some sort of "racket" to actually hit the ball. The game will get harder as the ball will become faster as the points go up. 
 
 ### Extra Features
 What are some features that are not essential to the program, but you would like to see (provided you have time after completing the necessary features. Theses can be customizations that are not part of the core requirements.
 
-YOUR ANSWERS HERE
+Make the game have realistic physics when the ball colides with the movement of the racket/mouse pointer. 
 
 ### Array Usage
 How will you be using arrays in this project?
 
 1D Array:
-- YOUR ANSER HERE
+- The main ball
 
 2D Array:
-- YOUR ANSWER HERE
+- The boxes with scores/blocks
 
 
 ### Controls
 How will your program be controlled? List all keyboard commands and mouse interactions.
 
 Keyboard Commands:
-- LIST OF COMMANDS HERE
+- r to reset
+- esc to pause
+- space to resume
+- maybe arrow key control the bracket
 
 Mouse Control:
-- Mouse movement:
-- Mouse pressed:
+- Mouse movement: x only
+- Mouse pressed: left click to respawn when the ball touches non-bounceable walls
 
 
 ### Classes
 What classes will you be creating for this project? Include the instance variables and methods that you believe you will need. You will be required to create at least 2 different classes. If you are going to use classes similar to those we've made for previous assignments, you will have to add new features to them.
 
-CLASS NAME0
-- Instance variables:
-  - LIST INSTANCE VARS HERE
+CLASS BALL
+- int x, y;
+- int xspeed, yspeed;
+- int size;
 - METHODS
-  - LIST METHODS HERE
+- void breakBlock();
+- void display();
+- void move();
+- void bounce();
+- void die();
 
-CLASS NAME1
+CLASS BLOCK
 - Instance variables:
-  - LIST INSTANCE VARS HERE
+  - int x, y;
+  - int height;
+  - int width;
+  - boolean break;
 - METHODS
-  - LIST METHODS HERE
+  - void display()
+  - 
+
+CLASS RACKET
+- Instance variables:
+  - int xcor, ycor;
+  - int racketWidth;
+  - int racketHeight;
+- METHODS
+  - void display()
+  - ballSpeed()
