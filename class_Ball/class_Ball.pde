@@ -26,8 +26,8 @@ class Ball {
   }
 
   void reset() {
-    x = width/2;
-    y = 300;
+    x = 300;
+    y = 700;
     xspeed = 5;
     yspeed = -5;
   }
