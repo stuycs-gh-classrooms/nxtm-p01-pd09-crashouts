@@ -2,4 +2,6 @@
 - Started on the Class of Ball and Block
 - Finished class Ball and Block
 - Finished class Racket
-- 
+- Added Levels
+- Change the spawn place of the ball to be random
+- Change the background to random rgb when you reach the next level 
