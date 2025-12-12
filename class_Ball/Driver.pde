@@ -18,13 +18,13 @@ void setup() {
 }
 
 void draw() {
-  background(0); 
+  background(0);
 
   // Draw the UI at the top of the screen
   r = random (0, 255);
-  g = random (0,255);
+  g = random (0, 255);
   b = random (0, 255);
-  fill(r,g,b);
+  fill(r, g, b);
   textSize(20);
   textAlign(LEFT);
   text("Score: " + score, 20, 30);
@@ -49,12 +49,12 @@ void draw() {
   ball.display();
 
   // Check collision between ball and paddle
-  if (ball.y + ball.r >= racket.y 
-  && ball.x > racket.x 
-  && ball.x < racket.x + racket.w) 
-{
+  if (ball.y + ball.r >= racket.y
+    && ball.x > racket.x
+    && ball.x < racket.x + racket.w)
+  {
     ball.yspeed *= -1; // reverse vertical direction
-    // change horizontal speed based on where it hit the paddle
+    // this is what we wanted (somewhat) as the extra feature: change horizontal speed based on where it hit the paddle
     float hitPos = (ball.x - (racket.x + racket.w/2)) / (racket.w/2);
     ball.xspeed = hitPos * 5;
   }
@@ -86,8 +86,9 @@ void draw() {
     level++;
     ball.reset();
     initLevel();
-    while (level == 2);
-    background(r,g,b);
+    while (level == 2) {
+      background(r, g, b);
+    }
   }
 }
 
@@ -105,10 +106,10 @@ void initLevel() {
   float bh = 25;
 
   color[] rowColors = {
-    color(255, 0, 0),   // 50 pts
+    color(255, 0, 0), // 50 pts
     color(255, 165, 0), // 40 pts
     color(255, 255, 0), // 30 pts
-    color(0, 200, 0),   // 20 pts
+    color(0, 200, 0), // 20 pts
     color(0, 150, 255)  // 10 pts
   };
 
