@@ -5,7 +5,7 @@ int rows = 5;
 int cols = 10;
 int score = 0;
 int lives = 3;
-int level = 1;
+float level = 1;
 float r;
 float g;
 float b;
