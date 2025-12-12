@@ -4,8 +4,8 @@ class Ball {
   float r;
 
   Ball(float x, float y, float xs, float ys, float r) {
-    this.x = x;
-    this.y = y;
+    this.x = random (0, width);
+    this.y = random (300, 680);
     this.xspeed = xs;
     this.yspeed = ys;
     this.r = r;

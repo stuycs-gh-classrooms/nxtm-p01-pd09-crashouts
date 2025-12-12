@@ -6,6 +6,9 @@ int cols = 10;
 int score = 0;
 int lives = 3;
 int level = 1;
+float r;
+float g;
+float b;
 boolean paused = false;
 boolean gameOver = false;
 
@@ -18,7 +21,10 @@ void draw() {
   background(0); 
 
   // Draw the UI at the top of the screen
-  fill(255);
+  r = random (0, 255);
+  g = random (0,255);
+  b = random (0, 255);
+  fill(r,g,b);
   textSize(20);
   textAlign(LEFT);
   text("Score: " + score, 20, 30);
@@ -80,6 +86,8 @@ void draw() {
     level++;
     ball.reset();
     initLevel();
+    while (level == 2);
+    background(r,g,b);
   }
 }
 
