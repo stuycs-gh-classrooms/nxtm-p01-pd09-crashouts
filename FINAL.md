@@ -1,8 +1,8 @@
 # NeXtCS Project 01
 ### Period:  
-### Name0: YOUR NAME HERE
-### Name1: TEAMMATE NAME HERE (delete if working solo)
-#### Selected Game: YOUR GAME HERE
+### Name0: Erick Lin
+### Name1: Samuan Asaf
+#### Selected Game: Breakout
 ---
 
 ### How To Play
