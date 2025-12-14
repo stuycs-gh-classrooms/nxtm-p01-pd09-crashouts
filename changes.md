@@ -4,4 +4,7 @@
 - Finished class Racket
 - Added Levels
 - Change the spawn place of the ball to be random
-- Change the background to random rgb when you reach the next level 
+- Change the background to random rgb when you reach the next level
+- Fixed an issue where the ball speed and racket size would reset after losing a life, so difficulty now stays consistent for the current level.
+- Increased ball speed and decreased racket size as levels progress to make the game harder.
+- Made Level 3 the final level, where the screen flashes RGB colors and the game becomes extremely difficult.
