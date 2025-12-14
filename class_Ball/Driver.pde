@@ -1,36 +1,43 @@
-Ball ball; // the ball object
-Racket racket; // the player paddle
-Block[][] blocks; // 2D array of blocks
-int rows = 5;
-int cols = 10;
+Ball ball;            
+Racket racket;       
+Block[][] blocks; 
+
+int rows = 3;
+int cols = 3;
 int score = 0;
 int lives = 3;
-float level = 1;
-float r;
-float g;
-float b;
+int level = 1;       
+
+float r, g, b;       
 boolean paused = false;
 boolean gameOver = false;
+boolean finalLevel = false; // true level 3
 
 void setup() {
   size(600, 700);
-  initLevel(); //  first level
+  initLevel();
 }
 
 void draw() {
-  background(0);
+  if (finalLevel) {
+    r = random(255);
+    g = random(255);
+    b = random(255);
+    background(r, g, b);
+  } else {
+    background(0);
+  }
 
-  // Draw the UI at the top of the screen
-  r = random (0, 255);
-  g = random (0, 255);
-  b = random (0, 255);
-  fill(r, g, b);
+  if (finalLevel) fill(255 - r, 255 - g, 255 - b);
+  else fill(255);
+
   textSize(20);
   textAlign(LEFT);
   text("Score: " + score, 20, 30);
   text("Lives: " + lives, 20, 60);
   text("Level: " + level, 20, 90);
 
+  // Pause / Game Over
   if (paused || gameOver) {
     fill(255);
     textSize(32);
@@ -40,88 +47,113 @@ void draw() {
     return;
   }
 
-  // Update and draw the paddle
+  // Paddle
   racket.update();
   racket.display();
 
-  // Move and draw the ball
+  // Ball
   ball.move();
   ball.display();
 
-  // Check collision between ball and paddle
-  if (ball.y + ball.r >= racket.y
-    && ball.x > racket.x
-    && ball.x < racket.x + racket.w)
-  {
-    ball.yspeed *= -1; // reverse vertical direction
-    // this is what we wanted (somewhat) as the extra feature: change horizontal speed based on where it hit the paddle
+  // Ball–paddle collision
+  if (ball.y + ball.r >= racket.y &&
+      ball.x > racket.x &&
+      ball.x < racket.x + racket.w) {
+
+    ball.yspeed *= -1;
+
     float hitPos = (ball.x - (racket.x + racket.w/2)) / (racket.w/2);
-    ball.xspeed = hitPos * 5;
+    ball.xspeed = hitPos * (finalLevel ? 9 : 5);
   }
 
-  // Ball falls below paddle = lose life
+  // Ball falls below paddle
   if (ball.y > height) {
     lives--;
-    if (lives <= 0) gameOver = true; // game over if no lives left
-    else ball.reset(); // reset ball if lives remain
-  }
 
-  int pts[] = {50, 40, 30, 20, 10}; // points for each row
-
-  // Check collisions with blocks
-  for (int r = 0; r < rows; r++) {
-    for (int c = 0; c < cols; c++) {
-      Block b = blocks[r][c];
-      if (!b.broken && b.checkCollision(ball)) {
-        b.broken = true; // mark block as destroyed
-        ball.yspeed *= -1; // bounce ball
-        score += pts[b.row]; // add points
-      }
-      b.display(); // draw block
+    if (lives <= 0) {
+      gameOver = true;
+    } else {
+      resetBallForCurrentLevel();
     }
   }
 
-  // Check if all blocks are broken -> level up
+  int pts[] = {50, 40, 30, 20, 10};
+
+  // Block collisions
+  for (int r = 0; r < rows; r++) {
+    for (int c = 0; c < cols; c++) {
+      Block blk = blocks[r][c];
+      if (!blk.broken && blk.checkCollision(ball)) {
+        blk.broken = true;
+        ball.yspeed *= -1;
+        score += pts[blk.row];
+      }
+      blk.display();
+    }
+  }
+
+  // Level progression
   if (allBroken()) {
-    level++;
-    ball.reset();
-    initLevel();
-    while (level == 2) {
-      background(r, g, b);
+    if (level < 3) {
+      level++;
+      initLevel();
+    } else {
+      fill(255);
+      textSize(36);
+      textAlign(CENTER);
+      text("YOU BEAT THE IMPOSSIBLE LEVEL", width/2, height/2);
+      noLoop();
     }
   }
 }
 
-// Initialize or reset the level
+//Level initialization + difficulty scales
 void initLevel() {
-  float ballSpeed = 5 + level * 1.5; // ball speed increases with level
+  finalLevel = (level == 3);
+
+  float ballSpeed;
+  if (level == 1) ballSpeed = 5;
+  else if (level == 2) ballSpeed = 7.5;
+  else ballSpeed = 11;
+
   ball = new Ball(width/2, 300, ballSpeed, -ballSpeed, 10);
 
-  float racketWidth = max(40, 100 - level * 5); // paddle shrinks as level increases, min width 40
+  float racketWidth;
+  if (level == 1) racketWidth = 100;
+  else if (level == 2) racketWidth = 75;
+  else racketWidth = 45;
+
   racket = new Racket(width/2 - racketWidth/2, height - 60, racketWidth, 15);
 
-  // Create blocks
   blocks = new Block[rows][cols];
   float bw = width / cols;
   float bh = 25;
 
   color[] rowColors = {
-    color(255, 0, 0), // 50 pts
-    color(255, 165, 0), // 40 pts
-    color(255, 255, 0), // 30 pts
-    color(0, 200, 0), // 20 pts
-    color(0, 150, 255)  // 10 pts
+    color(255, 0, 0),
+    color(255, 165, 0),
+    color(255, 255, 0),
+    color(0, 200, 0),
+    color(0, 150, 255)
   };
 
   for (int r = 0; r < rows; r++) {
     for (int c = 0; c < cols; c++) {
-      // position blocks below the top UI
       blocks[r][c] = new Block(c * bw, r * bh + 120, bw - 2, bh - 2, rowColors[r], r);
     }
   }
 }
 
-// Check if all blocks are destroyed
+
+void resetBallForCurrentLevel() {
+  float ballSpeed;
+  if (level == 1) ballSpeed = 5;
+  else if (level == 2) ballSpeed = 7.5;
+  else ballSpeed = 11;
+
+  ball = new Ball(width/2, 300, ballSpeed, -ballSpeed, 10);
+}
+
 boolean allBroken() {
   for (int r = 0; r < rows; r++) {
     for (int c = 0; c < cols; c++) {
@@ -131,15 +163,15 @@ boolean allBroken() {
   return true;
 }
 
-// Keyboard controls
 void keyPressed() {
-  if (key == 'p') paused = !paused; // pause/unpause
-  if (key == 'r') { // reset game
+  if (key == 'p') paused = !paused;
+  if (key == 'r') {
     score = 0;
     lives = 3;
     level = 1;
-    gameOver = false;
     paused = false;
+    gameOver = false;
+    loop();
     initLevel();
   }
 }
